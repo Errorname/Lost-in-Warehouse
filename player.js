@@ -72,14 +72,14 @@ Player.directionToCoord = function(direction) {
 
 Player.prototype.move = function() {
 
+	var lastDirection = this.lastDirectionDown();
+
+	// Change the sprite orientation
+	this.sprite.frame = lastDirection;
+
 	if (this.canMove()) {
 
 		this.isMoving = true;
-
-		var lastDirection = this.lastDirectionDown();
-
-		// Change the sprite orientation
-		this.sprite.frame = lastDirection;
 
 		// Make the coord change
 		var coord = Player.directionToCoord(lastDirection);
@@ -109,15 +109,30 @@ Player.prototype.canMove = function() {
 
 	var coord = Player.directionToCoord(key);
 
-	if (this.coord.x + coord.x < 0) {
+	coord.x += this.coord.x;
+	coord.y += this.coord.y;
+
+	if (coord.x < 0) {
 		return false;
-	} else if (this.coord.x + coord.x > game.map.width-1) {
+	} else if (coord.x > game.map.width-1) {
 		return false;
 	}
 
-	if (this.coord.y + coord.y < 0) {
+	if (coord.y < 0) {
 		return false;
-	} else if (this.coord.y + coord.y > game.map.height-1) {
+	} else if (coord.y > game.map.height-1) {
+		return false;
+	}
+
+	var floor_tile = game.map.layers.floor.tiles[coord.x];
+
+	if (floor_tile == undefined || floor_tile[coord.y] == undefined) {
+		return false;
+	}
+
+	var obstacle_tile = game.map.layers.obstacle.tiles[coord.x];
+
+	if (obstacle_tile != undefined && obstacle_tile[coord.y] != undefined) {
 		return false;
 	}
 
