@@ -102,6 +102,18 @@
 							"id": "6"
 						}
 					]
+				},
+				{
+					"coord": {"x": 13, "y": 13},
+					"sprite_id": 14,
+					"sprite_id_triggered": 16,
+					"permanent": true,
+					"targets": [
+						{
+							"type": "portal",
+							"id": "1"
+						}
+					]
 				}
 			]
 		},
@@ -165,6 +177,28 @@
 			"sprite_id": 12,
 			"coords": [
 				{"x":3,"y":3}
+			]
+		},
+		"portals": {
+			"list_raw": [
+				{
+					"id": 1,
+					"active": false,
+					"coord": {"x": 15, "y": 11},
+					"sprite_id": 19,
+					"sprite_id_activated": 24,
+					"weight": 1,
+					"portal_to": 2
+				},
+				{
+					"id": 2,
+					"active": true,
+					"coord": {"x": 15, "y": 3},
+					"sprite_id": 19,
+					"sprite_id_activated": 24,
+					"weight": 1,
+					"portal_to": 1
+				}
 			]
 		}
 	}

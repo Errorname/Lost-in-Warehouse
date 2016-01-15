@@ -104,10 +104,10 @@ Player.prototype.registerKeyDown = function(keyCode) {
 			if (this.keys_down[i] == 2) {
 				this.keys_down[i] = 1;
 			}
-
-			// The last direction down is set to 2
-			this.keys_down[keyCode-37] = 2; // -37 because directions start at 37
 		}
+
+		// The last direction down is set to 2
+		this.keys_down[keyCode-37] = 2; // -37 because directions start at 37
 
 		/* If player isn't moving, make him move */
 		if (!game.player.isMoving) {
@@ -158,6 +158,18 @@ Player.prototype.lastDirectionDown = function() {
 
 Player.prototype.move = function() {
 
+	// If the player is on a portal
+	if (this.isOnPortal()) {
+
+		var portal_dest = Portal.getPortalById(Portal.getPortal(this.coord.x,this.coord.y).portal_to);
+
+		this.coord.x = portal_dest.coord.x;
+		this.coord.y = portal_dest.coord.y;
+
+		this.sprite.isoX = this.coord.x * Tile.width;
+		this.sprite.isoY = this.coord.y * Tile.height;
+
+	}
 
 	// Is the player on boost and can slide
 	if (this.isOnBoost() && this.canSlide()) {
@@ -312,6 +324,19 @@ Player.prototype.canMove = function(key) {
 	}
 
 	return true;
+
+};
+
+Player.prototype.isOnPortal = function() {
+
+	var portal = Portal.getPortal(this.coord.x,this.coord.y);
+
+	if (portal == undefined || !portal.active)
+		return false;
+
+	var portal_dest = Portal.getPortalById(portal.portal_to);
+
+	return portal_dest != undefined && portal_dest.active;
 
 };
 

@@ -210,6 +210,28 @@
 				{"x": 10, "y": 10},
 				{"x": 2, "y": 8}
 			]
+		},
+		"portals": {
+			"list_raw": [
+				{
+					"id": 1,
+					"active": false,
+					"coord": {"x": 15, "y": 11},
+					"sprite_id": 19,
+					"sprite_id_activated": 24,
+					"weight": 1,
+					"portal_to": 2
+				},
+				{
+					"id": 2,
+					"active": true,
+					"coord": {"x": 15, "y": 3},
+					"sprite_id": 19,
+					"sprite_id_activated": 24,
+					"weight": 1,
+					"portal_to": 1
+				}
+			]
 		}
 	}
 }

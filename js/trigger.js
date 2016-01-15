@@ -70,6 +70,13 @@ Trigger.prototype.trigger = function() {
 			if (boost != undefined) {
 				boost.activate();
 			}
+		} else if (target.type == "portal") {
+
+			var portal = Portal.getPortalById(target.id);
+
+			if (portal != undefined) {
+				portal.activate();
+			}
 		}
 
 	});

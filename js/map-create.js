@@ -9,6 +9,7 @@ Map.createLayer = function(){
 	Map.createLayer.boosts();
 	Map.createLayer.doors();
 	Map.createLayer.woodboxes();
+	Map.createLayer.portals();
 
 };
 
@@ -150,6 +151,22 @@ Map.createLayer.woodboxes = function() {
 		var woodbox = new WoodBox(coord.x,coord.y,woodboxes.sprite_id);
 
 		woodboxes.list.push(woodbox);
+
+	});
+
+};
+
+Map.createLayer.portals = function() {
+
+	var portals = game.map.layers['portals'];
+
+	portals.list = [];
+
+	portals.list_raw.forEach(function(portal_raw) {
+
+		var portal = new Portal(portal_raw);
+
+		portals.list.push(portal);
 
 	});
 
