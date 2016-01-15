@@ -105,8 +105,14 @@ Layers.load.action_tiles = function() {
 		tile.type = tile_raw.type;
 		tile.weight = tile_raw.weight;
 		tile.current_weight = tile.active ? tile.weight : 0;
+		tile.direction = tile_raw.direction;
 
 		Tile.addActionCallbacks(tile);
+
+		if (tile.active) {
+			tile.active = false; // bug fix, look away.
+			tile.activate(tile.weight);
+		}
 	});
 
 };

@@ -72,6 +72,22 @@ Player.directionToCoord = function(direction) {
 
 // Prototypes
 
+Player.prototype.tweenEffect = function(duration) {
+	var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * Tile.width, isoY: this.coord.y * Tile.height}, duration, Phaser.Easing.Linear.None, true, 0, 0, false);
+		
+	tween.onComplete.add(function() {
+
+			this.trigger();
+
+			if (this.isOnBoost()) {
+				this.slideOnBoost();
+			} else {
+				this.move();
+			}
+
+		},this);
+};
+
 Player.prototype.move = function() {
 
 	var lastDirection = this.lastDirectionDown();
@@ -82,7 +98,6 @@ Player.prototype.move = function() {
 	if (this.canMove()) {
 
 		this.isMoving = true;
-
 		this.untrigger();
 
 		// Make the coord change
@@ -90,15 +105,7 @@ Player.prototype.move = function() {
 		this.coord.x += coord.x;
 		this.coord.y += coord.y;
 
-		// Add a sliding effect
-		var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * Tile.width, isoY: this.coord.y * Tile.height}, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
-		
-		tween.onComplete.add(function() {
-
-				this.trigger();
-				this.move();
-
-			},this);
+		this.tweenEffect(200);
 
 	} else {
 		this.isMoving = false;
@@ -157,6 +164,36 @@ Player.prototype.canMove = function() {
 	}
 
 	return true;
+
+};
+
+
+Player.prototype.isOnBoost = function() {
+
+	var action_tile = game.map.layers['action_tiles'].tiles[this.coord.x];
+
+	if (action_tile != undefined && action_tile[this.coord.y] != undefined) {
+		action_tile = action_tile[this.coord.y];
+
+		if (action_tile.type == 'boost' && action_tile.active) {
+			return true;
+		}
+	}
+
+};
+
+Player.prototype.slideOnBoost = function() {
+
+	this.isMoving = true;
+	this.untrigger();
+
+	// Make the coord change
+	var coord = Player.directionToCoord(game.map.layers['action_tiles'].tiles[this.coord.x][this.coord.y].direction);
+
+	this.coord.x += coord.x;
+	this.coord.y += coord.y;
+
+	this.tweenEffect(100);
 
 };
 
