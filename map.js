@@ -39,6 +39,7 @@ Map.createTiles = function() {
 	Layers.load.walls();
 	Layers.load.triggers();
 	Layers.load.action_tiles();
+	Layers.load.woodboxes();
 
 };
 

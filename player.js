@@ -105,7 +105,12 @@ Player.prototype.move = function() {
 		this.coord.x += coord.x;
 		this.coord.y += coord.y;
 
-		this.tweenEffect(200);
+		if (this.isPushingWoodbox()) {
+			game.map.layers.woodboxes.tiles[this.coord.x][this.coord.y].move(lastDirection);
+			this.tweenEffect(400);
+		} else {
+			this.tweenEffect(200);
+		}
 
 	} else {
 		this.isMoving = false;
@@ -113,60 +118,18 @@ Player.prototype.move = function() {
 
 };
 
-Player.prototype.canMove = function() {
+Player.prototype.canMove = Misc.canMove;
 
-	var key = this.lastDirectionDown();
+Player.prototype.isPushingWoodbox = function() {
+	// If there is a wood box
+	var woodbox = game.map.layers.woodboxes.tiles[this.coord.x];
 
-	// No key currently down
-	if (key == -1)
-		return false;
-
-	var coord = Player.directionToCoord(key);
-
-	coord.x += this.coord.x;
-	coord.y += this.coord.y;
-
-	if (coord.x < 0) {
-		return false;
-	} else if (coord.x > game.map.width-1) {
-		return false;
+	if (woodbox != undefined && woodbox[this.coord.y] != undefined) {
+		
+		return true;
 	}
-
-	if (coord.y < 0) {
-		return false;
-	} else if (coord.y > game.map.height-1) {
-		return false;
-	}
-
-	// If there is no floor
-	var floor_tile = game.map.layers.floor.tiles[coord.x];
-
-	if (floor_tile == undefined || floor_tile[coord.y] == undefined) {
-		return false;
-	}
-
-	// If there is a wall
-	var wall_tile = game.map.layers.walls.tiles[coord.x];
-
-	if (wall_tile != undefined && wall_tile[coord.y] != undefined) {
-		return false;
-	}
-
-	// If there is an action tile of type obstacle
-	var action_tile = game.map.layers.action_tiles.tiles[coord.x];
-
-	if (action_tile != undefined && action_tile[coord.y] != undefined) {
-		action_tile = action_tile[coord.y];
-
-		if (action_tile.type == "obstacle" && !action_tile.active) {
-			return false;
-		}
-	}
-
-	return true;
-
+	return false;
 };
-
 
 Player.prototype.isOnBoost = function() {
 

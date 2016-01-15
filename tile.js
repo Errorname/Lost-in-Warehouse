@@ -84,3 +84,58 @@ Tile.addActionCallbacks = function(tile) {
 
 	};
 };
+
+Tile.addWoodboxCallbacks = function(tile) {
+
+	tile.canMove = Misc.canMove;
+
+	tile.move = function(key) {
+
+		this.untrigger();
+
+		var coord = Player.directionToCoord(key);
+
+		game.map.layers.woodboxes.tiles[this.coord.x][this.coord.y] = undefined;
+
+		this.coord.x += coord.x;
+		this.coord.y += coord.y;
+
+		if (game.map.layers.woodboxes.tiles[this.coord.x] == undefined) {
+			game.map.layers.woodboxes.tiles[this.coord.x] = [];
+		}
+		game.map.layers.woodboxes.tiles[this.coord.x][this.coord.y] = this;
+
+		var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * Tile.width, isoY: this.coord.y * Tile.height}, 400, Phaser.Easing.Linear.None, true, 0, 0, false);
+		
+		tween.onComplete.add(function() {
+
+				this.trigger();
+
+			},this);
+
+	};
+
+	tile.trigger = function() {
+		var trigger_tile = game.map.layers.triggers.tiles[this.coord.x];
+
+		if (trigger_tile != undefined && trigger_tile[this.coord.y] != undefined) {
+			trigger_tile = trigger_tile[this.coord.y];
+
+			if (!trigger_tile.triggered) {
+				if (!trigger_tile.permanent) {
+					this.tile_triggered = trigger_tile;
+				}
+				
+				trigger_tile.trigger();
+			}
+		}
+	};
+
+	tile.untrigger = function() {
+		if (this.tile_triggered != undefined) {
+			this.tile_triggered.untrigger();
+			this.tile_triggered = undefined;
+		}
+	};
+
+};

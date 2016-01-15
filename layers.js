@@ -116,3 +116,26 @@ Layers.load.action_tiles = function() {
 	});
 
 };
+
+Layers.load.woodboxes = function() {
+
+	var woodboxes = game.map.layers['woodboxes'];
+
+	woodboxes.tiles = [];
+
+	woodboxes.coords.forEach(function(coord) {
+
+		if(woodboxes.tiles[coord.x] == undefined) {
+			woodboxes.tiles[coord.x] = [];
+		}
+
+		var tile = new Tile(coord.x,coord.y,woodboxes.sprite_id,'main');
+
+		woodboxes.tiles[coord.x][coord.y] = tile;
+		tile.type = "woodbox";
+
+		Tile.addWoodboxCallbacks(tile);
+
+	});
+
+};
