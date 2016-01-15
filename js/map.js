@@ -24,6 +24,8 @@ Map.create = function() {
 	game.map.layers = map_json.layers;
 	game.map.player_coord = map_json.player;
 
+	game.map.winning_tile = 18;
+
 	/* Create layers */
 	Map.createLayer();
 

@@ -84,6 +84,15 @@ Player.directionToCoord = function(direction) {
 // Prototypes
 
 
+Player.prototype.isWinning = function() {
+
+	var tile = game.map.layers.floor.tiles[this.coord.x][this.coord.y];
+	if (tile != undefined && tile.sprite.id == game.map.winning_tile) {
+		game.state.clearCurrentState();
+	}
+
+};
+
 Player.prototype.registerKeyDown = function(keyCode) {
 
 	// id direction key
@@ -310,6 +319,8 @@ Player.prototype.moveAnimation = function(duration) {
 	var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * Tile.width, isoY: this.coord.y * Tile.height}, duration, Phaser.Easing.Linear.None, true, 0, 0, false);
 
 	tween.onComplete.add(function() {
+		if (this.isWinning())
+			return;
 		this.trigger();
 		this.move();
 	},this);
