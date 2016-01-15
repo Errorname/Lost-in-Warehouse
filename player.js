@@ -13,7 +13,7 @@ Player.preload = function() {
 Player.create = function() {
 
 	/* Create the player object */
-	game.player = new Player(game.add.isoSprite(134,134, 0, 'robot', 0, game.groups['main-layer']));
+	game.player = new Player(game.add.isoSprite(134,134, 0, 'robot', 0, game.iso_layers['main']));
 	game.player.sprite.anchor.set(0.5, 1.0);
 	game.player.coord = {x: 2, y: 2};
 	game.player.keys_down = [0,0,0,0,0];
@@ -45,6 +45,8 @@ Player.create = function() {
 
 	/* Make the camera follow the player */
 	game.camera.follow(game.player.sprite);
+
+	game.camera.deadzone = new Phaser.Rectangle(412, 300, 200, 100);
 
 };
 
@@ -89,13 +91,13 @@ Player.prototype.move = function() {
 		this.coord.y += coord.y;
 
 		// Add a sliding effect
-		var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * game.map_info.tile.width, isoY: this.coord.y * game.map_info.tile.height}, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
+		var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * Tile.width, isoY: this.coord.y * Tile.height}, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
 		
 		tween.onComplete.add(function() {
 
 				this.trigger();
-
 				this.move();
+
 			},this);
 
 	} else {
@@ -129,16 +131,29 @@ Player.prototype.canMove = function() {
 		return false;
 	}
 
+	// If there is no floor
 	var floor_tile = game.map.layers.floor.tiles[coord.x];
 
 	if (floor_tile == undefined || floor_tile[coord.y] == undefined) {
 		return false;
 	}
 
-	var obstacle_tile = game.map.layers.obstacle.tiles[coord.x];
+	// If there is a wall
+	var wall_tile = game.map.layers.walls.tiles[coord.x];
 
-	if (obstacle_tile != undefined && obstacle_tile[coord.y] != undefined) {
+	if (wall_tile != undefined && wall_tile[coord.y] != undefined) {
 		return false;
+	}
+
+	// If there is an action tile of type obstacle
+	var action_tile = game.map.layers.action_tiles.tiles[coord.x];
+
+	if (action_tile != undefined && action_tile[coord.y] != undefined) {
+		action_tile = action_tile[coord.y];
+
+		if (action_tile.type == "obstacle" && !action_tile.active) {
+			return false;
+		}
 	}
 
 	return true;
@@ -196,13 +211,13 @@ Player.prototype.registerKeyUp = function(keyCode) {
 };
 
 Player.prototype.trigger = function() {
-	var trigger_tile = game.map.layers.trigger.tiles[this.coord.x];
+	var trigger_tile = game.map.layers.triggers.tiles[this.coord.x];
 
 	if (trigger_tile != undefined && trigger_tile[this.coord.y] != undefined) {
 		trigger_tile = trigger_tile[this.coord.y];
 
 		if (!trigger_tile.triggered) {
-			if (trigger_tile.type == "multiple") {
+			if (!trigger_tile.permanent) {
 				this.tile_triggered = trigger_tile;
 			}
 			

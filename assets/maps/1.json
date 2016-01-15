@@ -3,7 +3,6 @@
 	"height": 16,
 	"layers": {
 		"floor": {
-			"method": "grid",
 			"tiles_raw": [
 				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -23,34 +22,73 @@
 				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 			]
 		},
-		"obstacle": {
-			"method": "list",
+		"walls": {
 			"tiles_raw": [
-				{
-					"coord": {"x": 0, "y": 0},
-					"id": 2
-				},
-				{
-					"coord": {"x": 5, "y": 6},
-					"id": 2
-				}
+				[0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0],
+				[2,2,2,0,2,2,2,2,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 			]
 		},
-		"trigger": {
-			"method": "list",
+		"triggers": {
 			"tiles_raw": [
 				{
 					"coord": {"x": 5, "y": 1},
-					"id": 3,
-					"id_triggered": 5,
-					"type": "multiple",
-					"time_to_untrigger": 300
+					"sprite_id": 3,
+					"sprite_id_triggered": 5,
+					"permanent": false,
+					"duration": 200,
+					"tiles_to_action": [1,2]
 				},
 				{
 					"coord": {"x": 1, "y": 1},
+					"sprite_id": 3,
+					"sprite_id_triggered": 5,
+					"permanent": true,
+					"tiles_to_action": [2,3]
+				}
+			]
+		},
+		"action_tiles": {
+			"tiles_raw": [
+				{
+					"id": 1,
+					"active": false,
+					"coord": {"x": 7, "y": 3},
+					"sprite_id": 6,
+					"sprite_id_activated": 7,
+					"type": "obstacle",
+					"weight": 1
+				},
+				{
+					"id": 2,
+					"active": false,
+					"coord": {"x": 7, "y": 4},
+					"sprite_id": 6,
+					"sprite_id_activated": 7,
+					"type": "obstacle",
+					"weight": 2
+				},
+				{
 					"id": 3,
-					"id_triggered": 5,
-					"type": "once"
+					"active": false,
+					"coord": {"x": 3, "y": 6},
+					"sprite_id": 6,
+					"sprite_id_activated": 7,
+					"type": "obstacle",
+					"weight": 1
 				}
 			]
 		}

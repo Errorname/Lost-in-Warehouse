@@ -26,8 +26,8 @@ BasicGame.Boot.prototype =
 	},
 	create: function() {
 
-		/* Add a group holder */
-		game.groups = [];
+		/* Add a group holder for iso layers*/
+		game.iso_layers = [];
 
 		/* Create Objects */
 		Map.create();
@@ -40,7 +40,8 @@ BasicGame.Boot.prototype =
 		Player.update();
 
 		/* Update the z index of the element of the scene */
-		game.iso.simpleSort(game.groups['main-layer']);
+		game.iso.simpleSort(game.iso_layers['floor']);
+		game.iso.simpleSort(game.iso_layers['main']);
 
 	},
 	render: function() {
