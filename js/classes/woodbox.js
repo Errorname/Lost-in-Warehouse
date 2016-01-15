@@ -119,6 +119,13 @@ WoodBox.prototype.canMove = function(direction) {
 		return false;
 	}
 
+	// If there is an enemy
+	var enemy = Enemy.getEnemy(coord.x,coord.y);
+
+	if (enemy != undefined) {
+		return false;
+	}
+
 	var woodbox = WoodBox.getWoodBox(coord.x,coord.y);
 
 	if (woodbox != undefined) {
@@ -150,6 +157,10 @@ WoodBox.prototype.moveAnimation = function(duration) {
 	tween.onComplete.add(function() {
 		this.isMoving = false;
 		this.trigger();
+	},this);
+
+	game.time.events.add(duration/2, function() {
+		Enemy.drawLasers();
 	},this);
 
 };

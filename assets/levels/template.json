@@ -94,6 +94,10 @@
 		"woodboxes": {
 			"coords": [
 			]
+		},
+		"enemies": {
+			"list_raw": [
+			]
 		}
 	}
 }

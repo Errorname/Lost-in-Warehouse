@@ -18,6 +18,13 @@ var Wall = function(x,y,sprite_id) {
 
 }
 
+Wall.getWall = function(x,y) {
+
+	if (game.map.layers.walls.tiles[x] != undefined)
+		return game.map.layers.walls.tiles[x][y];
+
+};
+
 Wall.create = function() {
 
 	var walls = game.map.layers['walls'];

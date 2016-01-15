@@ -207,6 +207,22 @@
 				{"x": 10, "y": 10},
 				{"x": 2, "y": 8}
 			]
+		},
+		"enemies": {
+			"list_raw": [
+				{
+					"coord": {"x": 13, "y":4},
+					"direction": 1
+				},
+				{
+					"coord": {"x": 8, "y": 6},
+					"direction": 2
+				},
+				{
+					"coord": {"x": 4, "y": 13},
+					"direction": 2
+				}
+			]
 		}
 	}
 }

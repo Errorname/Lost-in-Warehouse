@@ -101,6 +101,8 @@ Trigger.prototype.trigger = function() {
 
 	});
 
+	Enemy.drawLasers();
+
 };
 
 Trigger.prototype.untrigger = function() {
@@ -145,6 +147,8 @@ Trigger.prototype.untrigger = function() {
 			}
 
 		});
+
+		Enemy.drawLasers();
 
 	}.bind(this));
 

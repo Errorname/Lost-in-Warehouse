@@ -25,5 +25,7 @@ Map.prototype.createLayers = function() {
 	Boost.create();
 	Portal.create();
 	WoodBox.create();
+	Laser.create();
+	Enemy.create();
 
 };

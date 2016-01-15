@@ -165,6 +165,18 @@ Player.prototype.isOnExit = function() {
 
 };
 
+//////////
+
+Player.prototype.isOnLaser = function() {
+
+	var laser = Laser.getLaser(this.coord.x,this.coord.y);
+
+	return laser != undefined;
+
+};
+
+//////////
+
 Player.prototype.isOnPackage = function() {
 
 	var floor_tile = game.map.layers['floor'].tiles[this.coord.x][this.coord.y];
@@ -311,11 +323,18 @@ Player.prototype.moveAnimation = function(duration) {
 		if (this.isOnExit() && this.carryPackage) {
 			game.goToNextLevel();
 			return;
+		} else if (this.isOnLaser()) {
+			this.lose();
+			return;
 		}
 
 		this.isMoving = false;
 		this.trigger();
 		
+	},this);
+
+	game.time.events.add(duration/2, function() {
+		Enemy.drawLasers();
 	},this);
 
 };
@@ -362,6 +381,13 @@ Player.prototype.canMove = function(direction) {
 		return false;
 	}
 
+	// If there is an enemy
+	var enemy = Enemy.getEnemy(coord.x,coord.y);
+
+	if (enemy != undefined) {
+		return false;
+	}
+
 	// If there is a wood box
 	var woodbox = WoodBox.getWoodBox(coord.x,coord.y);
 
@@ -401,4 +427,15 @@ Player.prototype.untrigger = function() {
 		trigger.untrigger();
 	}
 
-}
+};
+
+//////////
+
+Player.prototype.lose = function() {
+
+	game.time.events.add(1000, function() {
+		Enemy.drawLasers();
+		game.restart();
+	},this);
+
+};
