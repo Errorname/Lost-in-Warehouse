@@ -8,15 +8,6 @@ LostInWarehouse.Preload.prototype =
 
 		text = game.add.text(400, 330, 'Loading: 0%', { fill: '#000000' });
 
-		/* Enable the Isometric plugin */
-		game.plugins.add(new Phaser.Plugin.Isometric(game));
-
-		/* Some misc options */
-		game.time.advancedTiming = true;
-		game.renderer.renderSession.roundPixels = true;
-
-		game.tweens.frameBased = true;
-
 		game.load.onLoadStart.add(function() {
 			console.log('Loading assets');
 		},this);

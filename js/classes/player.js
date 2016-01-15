@@ -217,7 +217,12 @@ Player.prototype.canUsePortal = function() {
 	var portal = Portal.getPortal(this.coord.x,this.coord.y);
 	var portal_dest = Portal.getPortalById(portal.portal_to);
 
-	return portal_dest != undefined && portal_dest.active;
+	if (portal_dest != undefined && portal_dest.active) {
+		var woodbox = WoodBox.getWoodBox(portal_dest.coord.x,portal_dest.coord.y);
+		return woodbox == undefined;
+	}
+
+	return false
 
 };
 

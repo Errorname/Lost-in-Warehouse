@@ -4,8 +4,10 @@ LostInWarehouse.Win = function(game) {};
 
 LostInWarehouse.Win.prototype =
 {
-	init: function(pos) {
+	init: function(pos,time) {
 		this.pos = pos;
+
+		this.time = game.time.now-time
 	},
 	preload: function() {
 		console.log('Loading Win Screen');
@@ -18,6 +20,8 @@ LostInWarehouse.Win.prototype =
 		awesome.fixedToCamera = true;
 		var box = game.add.button(540,350, 'box',this.showItem,this,0,0,0,0);
 		box.fixedToCamera = true;
+		var text = game.add.text(360,300, 'You delivered the package in '+(Math.floor(this.time/1000))+'\' '+( Math.floor((this.time%1000)/10) )+'"',{fontSize: '16px', fill: "#ffffff"});
+		text.fixedToCamera = true;
 
 		console.log('Loading Title Screen done.');
 
