@@ -1,6 +1,6 @@
 
-var Trigger = function(raw, iso_layer) {
-	
+var Trigger = function(raw) {
+
 	this.triggered = false;
 
 	/* Coords */
@@ -8,22 +8,26 @@ var Trigger = function(raw, iso_layer) {
 
 	/* Sprite */
 	this.sprite = game.add.isoSprite(
-			raw.coord.x*Tile.width,
-			raw.coord.y*Tile.height,
+			raw.coord.x*game.tile.width,
+			raw.coord.y*game.tile.height,
 			0,
-			'tile-'+raw.sprite_id,
+			'tile-'+(raw.permanent ? Trigger.data.sprite_id_permanent : Trigger.data.sprite_id),
 			0,
-			game.iso_layers[iso_layer]
+			game.iso_layers['floor']
 		);
 	this.sprite.anchor.set(0.5,1);
-	this.sprite.id = raw.sprite_id;
-	this.sprite.id_triggered = raw.sprite_id_triggered;
 
-	/* Other */
+	/* Misc */
 	this.permanent = raw.permanent;
-	this.duration = raw.duration;
 	this.targets = raw.targets;
 
+};
+
+Trigger.data = {
+	sprite_id: 15,
+	sprite_id_permanent: 14,
+	sprite_id_triggered: 16,
+	duration: 200
 };
 
 Trigger.getTrigger = function(x,y) {
@@ -40,8 +44,22 @@ Trigger.getTrigger = function(x,y) {
 
 };
 
+Trigger.create = function() {
+	var triggers = game.map.layers['triggers'];
 
-// Prototypes
+	triggers.list = [];
+
+	triggers.list_raw.forEach(function(trigger_raw) {
+
+		var trigger = new Trigger(trigger_raw);
+
+		triggers.list.push(trigger);
+
+	});
+};
+
+
+// PROTOTYPES
 
 
 Trigger.prototype.trigger = function() {
@@ -51,7 +69,7 @@ Trigger.prototype.trigger = function() {
 	}
 
 	this.triggered = true;
-	this.sprite.loadTexture('tile-'+this.sprite.id_triggered);
+	this.sprite.loadTexture('tile-'+Trigger.data.sprite_id_triggered);
 
 	this.targets.forEach(function(target) {
 
@@ -60,7 +78,7 @@ Trigger.prototype.trigger = function() {
 			var door = Door.getDoorById(target.id);
 
 			if (door != undefined) {
-				door.open(); // If it's a big door, it may not open
+				door.open();
 			}
 
 		} else if (target.type == "boost") {
@@ -70,6 +88,7 @@ Trigger.prototype.trigger = function() {
 			if (boost != undefined) {
 				boost.activate();
 			}
+
 		} else if (target.type == "portal") {
 
 			var portal = Portal.getPortalById(target.id);
@@ -77,6 +96,7 @@ Trigger.prototype.trigger = function() {
 			if (portal != undefined) {
 				portal.activate();
 			}
+
 		}
 
 	});
@@ -91,10 +111,10 @@ Trigger.prototype.untrigger = function() {
 
 	var timer = game.time.create(false);
 
-	timer.add(this.duration, function() {
+	timer.add(Trigger.data.duration, function() {
 
 		this.triggered = false;
-		this.sprite.loadTexture('tile-'+this.sprite.id);
+		this.sprite.loadTexture('tile-'+(this.permanent ? Trigger.data.sprite_id_permanent : Trigger.data.sprite_id));
 
 		this.targets.forEach(function(target) {
 
@@ -113,6 +133,15 @@ Trigger.prototype.untrigger = function() {
 				if (boost != undefined) {
 					boost.deactivate();
 				}
+
+			} else if (target.type == "portal") {
+
+				var portal = Portal.getPortalById(target.id);
+
+				if (portal != undefined) {
+					portal.deactivate();
+				}
+
 			}
 
 		});

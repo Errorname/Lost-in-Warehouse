@@ -8,25 +8,42 @@ var Boost = function(raw) {
 
 	/* Sprite */
 	this.sprite = game.add.isoSprite(
-			raw.coord.x*Tile.width,
-			raw.coord.y*Tile.height,
+			raw.coord.x*game.tile.width,
+			raw.coord.y*game.tile.height,
 			0,
-			'tile-'+(this.active ? raw.sprite_id_activated : raw.sprite_id),
+			'tile-'+(Boost.data.base_sprite_id+(this.active ? raw.direction_activated : raw.direction)),
 			0,
 			game.iso_layers['floor']
 		);
 	this.sprite.anchor.set(0.5,1);
-	this.sprite.id = raw.sprite_id;
-	this.sprite.id_activated = raw.sprite_id_activated;
 
-	/* Other */
+	/* Misc */
 	this.id = raw.id;
 	this.direction = raw.direction;
 	this.direction_activated = raw.direction_activated;
 	this.weight = raw.weight;
 
 	this.current_weight = this.active ? this.weight : 0;
-	
+};
+
+Boost.data = {
+	base_sprite_id: 20
+};
+
+Boost.create = function() {
+
+	var boosts = game.map.layers['boosts'];
+
+	boosts.list = [];
+
+	boosts.list_raw.forEach(function(boost_raw) {
+
+		var boost = new Boost(boost_raw);
+
+		boosts.list.push(boost);
+
+	});
+
 };
 
 Boost.getBoost = function(x,y) {
@@ -59,7 +76,7 @@ Boost.getBoostById = function(id) {
 };
 
 
-// Prototypes
+// PROTOTYPES
 
 
 Boost.prototype.activate = function() {
@@ -69,14 +86,14 @@ Boost.prototype.activate = function() {
 	if (!this.active && this.current_weight >= this.weight) {
 
 		this.active = true;
-		this.sprite.loadTexture('tile-'+this.sprite.id_activated);
+		this.sprite.loadTexture('tile-'+(Boost.data.base_sprite_id+this.direction_activated));
 
 		// If there is a woodbox on it, make it slide
-		var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y);
+		/*var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y);
 
 		if (woodbox != undefined &&!woodbox.isSliding) {
 			woodbox.slide();
-		}
+		}*/
 
 	}
 
@@ -89,7 +106,7 @@ Boost.prototype.deactivate = function() {
 	if (this.active && this.current_weight < this.weight) {
 
 		this.active = false;
-		this.sprite.loadTexture('tile-'+this.sprite.id);
+		this.sprite.loadTexture('tile-'+(Boost.data.base_sprite_id+this.direction));
 
 	}
 

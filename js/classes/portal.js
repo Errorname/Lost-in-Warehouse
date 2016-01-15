@@ -8,16 +8,14 @@ var Portal = function(raw) {
 
 	/* Sprite */
 	this.sprite = game.add.isoSprite(
-			raw.coord.x*Tile.width,
-			raw.coord.y*Tile.height,
+			raw.coord.x*game.tile.width,
+			raw.coord.y*game.tile.height,
 			0,
-			'tile-'+(this.active ? raw.sprite_id_activated : raw.sprite_id),
+			'tile-'+(this.active ? Portal.data.sprite_id_activated : Portal.data.sprite_id),
 			0,
 			game.iso_layers['floor']
 		);
 	this.sprite.anchor.set(0.5,1);
-	this.sprite.id = raw.sprite_id;
-	this.sprite.id_activated = raw.sprite_id_activated;
 
 	/* Other */
 	this.id = raw.id;
@@ -25,8 +23,12 @@ var Portal = function(raw) {
 	this.weight = raw.weight;
 
 	this.current_weight = this.active ? this.weight : 0;
-	
-};
+}
+
+Portal.data = {
+	sprite_id: 19,
+	sprite_id_activated: 24
+}
 
 Portal.getPortal = function(x,y) {
 
@@ -57,8 +59,24 @@ Portal.getPortalById = function(id) {
 
 };
 
+Portal.create = function() {
 
-// Prototypes
+	var portals = game.map.layers['portals'];
+
+	portals.list = [];
+
+	portals.list_raw.forEach(function(portal_raw) {
+
+		var portal = new Portal(portal_raw);
+
+		portals.list.push(portal);
+
+	});
+
+};
+
+
+// PROTOTYPES
 
 
 Portal.prototype.activate = function() {
@@ -68,7 +86,7 @@ Portal.prototype.activate = function() {
 	if (!this.active && this.current_weight >= this.weight) {
 
 		this.active = true;
-		this.sprite.loadTexture('tile-'+this.sprite.id_activated);
+		this.sprite.loadTexture('tile-'+Portal.data.sprite_id_activated);
 
 	}
 
@@ -81,7 +99,7 @@ Portal.prototype.deactivate = function() {
 	if (this.active && this.current_weight < this.weight) {
 
 		this.active = false;
-		this.sprite.loadTexture('tile-'+this.sprite.id);
+		this.sprite.loadTexture('tile-'+Portal.data.sprite_id);
 
 	}
 

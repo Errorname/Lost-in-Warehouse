@@ -10,9 +10,9 @@
 			Lost in Warehouse
 		</h1>
 		<h2>
-			v0.2.5 : Adding portals
+			v0.3.0 : Refactoring 0.2.5
 		</h2>
-		<div id="test">
+		<div id="game">
 		</div>
 		<p style="text-align: center">
 			Developer:
@@ -29,18 +29,31 @@
 		<script src="../libs/phaser.js"></script>
 		<script src="../libs/phaser-plugin-isometric.js"></script>
 
+		<!-- Main script -->
 		<script src="game.js"></script>
 
-		<script src="js/map.js"></script>
-		<script src="js/map-create.js"></script>
+		<!-- States scripts -->
+		<script src="js/states/boot.js"></script>
+		<script src="js/states/preload.js"></script>
+		<script src="js/states/title.js"></script>
+		<script src="js/states/level.js"></script>
 
-		<script src="js/tile.js"></script>
-		<script src="js/trigger.js"></script>
-		<script src="js/boost.js"></script>
-		<script src="js/door.js"></script>
-		<script src="js/woodbox.js"></script>
-		<script src="js/portal.js"></script>
+		<!-- Classes scripts -->
+		<script src="js/classes/map.js"></script>
+		<script src="js/classes/player.js"></script>
+		<script src="js/classes/background.js"></script>
+		<script src="js/classes/floor.js"></script>
+		<script src="js/classes/wall.js"></script>
+		<script src="js/classes/trigger.js"></script>
+		<script src="js/classes/door.js"></script>
+		<script src="js/classes/boost.js"></script>
+		<script src="js/classes/portal.js"></script>
+		<script src="js/classes/woodbox.js"></script>
 
-		<script src="js/player.js"></script>
+		<!-- Starting the game -->
+		<script>
+			game.state.start('Boot');
+		</script>
+
 	</body>
 </html>

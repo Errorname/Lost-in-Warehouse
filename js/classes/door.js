@@ -8,23 +8,25 @@ var Door = function (raw) {
 
 	/* Sprite */
 	this.sprite = game.add.isoSprite(
-			raw.coord.x*Tile.width,
-			raw.coord.y*Tile.height,
+			raw.coord.x*game.tile.width,
+			raw.coord.y*game.tile.height,
 			0,
-			'tile-'+(this.opened ? raw.sprite_id_opened : raw.sprite_id),
+			'tile-'+(this.opened ? Door.data.sprite_id_opened : Door.data.sprite_id),
 			0,
-			game.iso_layers[(this.opened ? 'floor' : 'main')]
+			game.iso_layers[(this.openend ? 'floor' : 'main')]
 		);
 	this.sprite.anchor.set(0.5,1);
-	this.sprite.id = raw.sprite_id;
-	this.sprite.id_opened = raw.sprite_id_opened;
 
-	/* Other */
+	/* Misc */
 	this.id = raw.id;
 	this.weight = raw.weight;
 
 	this.current_weight = this.opened ? this.weight : 0;
+};
 
+Door.data = {
+	sprite_id: 13,
+	sprite_id_opened: 17
 };
 
 Door.getDoor = function(x, y) {
@@ -48,10 +50,26 @@ Door.getDoorById = function(id) {
 			return door;
 		}
 	}
-}
+};
+
+Door.create = function() {
+
+	var doors = game.map.layers['doors'];
+
+	doors.list = [];
+
+	doors.list_raw.forEach(function(door_raw) {
+
+		var door = new Door(door_raw);
+
+		doors.list.push(door);
+
+	});
+
+};
 
 
-// Prototypes
+// PROTOTYPES
 
 
 Door.prototype.open = function() {
@@ -62,7 +80,7 @@ Door.prototype.open = function() {
 	if (!this.opened && this.current_weight >= this.weight) {
 
 		this.opened = true;
-		this.sprite.loadTexture('tile-'+this.sprite.id_opened);
+		this.sprite.loadTexture('tile-'+Door.data.sprite_id_opened);
 
 		// An open door goes to the floor
 		game.iso_layers['main'].remove(this.sprite);
@@ -70,7 +88,7 @@ Door.prototype.open = function() {
 
 	}
 
-}
+};
 
 Door.prototype.close = function() {
 
@@ -79,7 +97,7 @@ Door.prototype.close = function() {
 	if (this.opened && this.current_weight < this.weight) {
 
 		this.opened = false;
-		this.sprite.loadTexture('tile-'+this.sprite.id);
+		this.sprite.loadTexture('tile-'+Door.data.sprite_id);
 
 		// A closed door goes to the main layer
 		game.iso_layers['floor'].remove(this.sprite);
@@ -87,4 +105,4 @@ Door.prototype.close = function() {
 
 	}
 
-}
+};

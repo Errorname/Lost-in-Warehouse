@@ -6,7 +6,7 @@
 		"background": {
 			"tiles_raw": [
 				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+				[0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,2],
 				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
 				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
 				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
@@ -64,8 +64,6 @@
 			"list_raw": [
 				{
 					"coord": {"x": 3, "y": 11},
-					"sprite_id": 14,
-					"sprite_id_triggered": 16,
 					"permanent": true,
 					"targets": [
 						{
@@ -84,10 +82,7 @@
 				},
 				{
 					"coord": {"x": 6, "y": 3},
-					"sprite_id": 15,
-					"sprite_id_triggered": 16,
 					"permanent": false,
-					"duration": 200,
 					"targets": [
 						{
 							"type": "door",
@@ -102,23 +97,7 @@
 							"id": "6"
 						}
 					]
-				},
-				{
-					"coord": {"x": 13, "y": 13},
-					"sprite_id": 14,
-					"sprite_id_triggered": 16,
-					"permanent": true,
-					"targets": [
-						{
-							"type": "portal",
-							"id": "1"
-						}
-					]
 				}
-			]
-		},
-		"boosts": {
-			"list_raw": [
 			]
 		},
 		"doors": {
@@ -127,78 +106,51 @@
 					"id": 1,
 					"opened": false,
 					"coord": {"x": 4, "y": 7},
-					"sprite_id": 13,
-					"sprite_id_opened": 17,
 					"weight": 1
 				},
 				{
 					"id": 2,
 					"opened": false,
 					"coord": {"x": 5, "y": 7},
-					"sprite_id": 13,
-					"sprite_id_opened": 17,
 					"weight": 1
 				},
 				{
 					"id": 3,
 					"opened": false,
 					"coord": {"x": 6, "y": 7},
-					"sprite_id": 13,
-					"sprite_id_opened": 17,
 					"weight": 1
 				},
 				{
 					"id": 4,
 					"opened": false,
 					"coord": {"x": 9, "y": 4},
-					"sprite_id": 13,
-					"sprite_id_opened": 17,
 					"weight": 1
 				},
 				{
 					"id": 5,
 					"opened": false,
 					"coord": {"x": 9, "y": 3},
-					"sprite_id": 13,
-					"sprite_id_opened": 17,
 					"weight": 1
 				},
 				{
 					"id": 6,
 					"opened": false,
 					"coord": {"x": 9, "y": 2},
-					"sprite_id": 13,
-					"sprite_id_opened": 17,
 					"weight": 1
 				}
 			]
 		},
-		"woodboxes": {
-			"sprite_id": 12,
-			"coords": [
-				{"x":3,"y":3}
+		"boosts": {
+			"list_raw": [
 			]
 		},
 		"portals": {
 			"list_raw": [
-				{
-					"id": 1,
-					"active": false,
-					"coord": {"x": 15, "y": 11},
-					"sprite_id": 19,
-					"sprite_id_activated": 24,
-					"weight": 1,
-					"portal_to": 2
-				},
-				{
-					"id": 2,
-					"active": true,
-					"coord": {"x": 15, "y": 3},
-					"sprite_id": 19,
-					"sprite_id_activated": 24,
-					"weight": 1,
-					"portal_to": 1
-				}
+			]
+		},
+		"woodboxes": {
+			"coords": [
+				{"x":3,"y":3}
 			]
 		}
 	}
