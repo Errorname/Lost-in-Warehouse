@@ -1,6 +1,7 @@
 {
 	"width": 16,
 	"height": 16,
+	"player": {"x": 2, "y": 2},
 	"layers": {
 		"floor": {
 			"tiles_raw": [
@@ -43,21 +44,39 @@
 			]
 		},
 		"triggers": {
-			"tiles_raw": [
+			"list_raw": [
 				{
 					"coord": {"x": 5, "y": 1},
 					"sprite_id": 3,
 					"sprite_id_triggered": 5,
 					"permanent": false,
 					"duration": 200,
-					"tiles_to_action": [1,2]
+					"targets": [
+						{
+							"type": "door",
+							"id": "1"
+						},
+						{
+							"type": "door",
+							"id": "2"
+						}
+					]
 				},
 				{
 					"coord": {"x": 1, "y": 1},
 					"sprite_id": 3,
 					"sprite_id_triggered": 5,
 					"permanent": true,
-					"tiles_to_action": [2,3]
+					"targets": [
+						{
+							"type": "door",
+							"id": "2"
+						},
+						{
+							"type": "door",
+							"id": "3"
+						}
+					]
 				},
 				{
 					"coord": {"x": 1,"y": 8},
@@ -65,87 +84,101 @@
 					"sprite_id_triggered": 5,
 					"permanent": false,
 					"duration": 200,
-					"tiles_to_action": [4,5,6]
+					"targets": [
+						{
+							"type": "boost",
+							"id": 1 
+						},
+						{
+							"type": "boost",
+							"id": 2
+						},
+						{
+							"type": "boost",
+							"id": 3
+						}
+					]
 				}
 			]
 		},
-		"action_tiles": {
-			"tiles_raw": [
+		"boosts": {
+			"list_raw": [
 				{
 					"id": 1,
 					"active": false,
-					"coord": {"x": 7, "y": 3},
-					"sprite_id": 6,
-					"sprite_id_activated": 7,
-					"type": "obstacle",
+					"coord": {"x": 3, "y": 8},
+					"sprite_id": 9,
+					"sprite_id_activated": 10,
+					"direction": -1,
+					"direction_activated": 0,
 					"weight": 1
 				},
 				{
 					"id": 2,
 					"active": false,
-					"coord": {"x": 7, "y": 4},
-					"sprite_id": 6,
-					"sprite_id_activated": 7,
-					"type": "obstacle",
-					"weight": 2
+					"coord": {"x": 3, "y": 9},
+					"sprite_id": 9,
+					"sprite_id_activated": 10,
+					"direction": -1,
+					"direction_activated": 0,
+					"weight": 1
 				},
 				{
 					"id": 3,
 					"active": false,
-					"coord": {"x": 3, "y": 6},
-					"sprite_id": 6,
-					"sprite_id_activated": 7,
-					"type": "obstacle",
+					"coord": {"x": 3, "y": 10},
+					"sprite_id": 9,
+					"sprite_id_activated": 10,
+					"direction": -1,
+					"direction_activated": 0,
 					"weight": 1
 				},
 				{
 					"id": 4,
-					"active": false,
-					"coord": {"x": 3, "y": 8},
-					"sprite_id": 9,
-					"sprite_id_activated": 10,
-					"type": "boost",
-					"direction": 0,
-					"weight": 1
-				},
-				{
-					"id": 5,
-					"active": false,
-					"coord": {"x": 3, "y": 9},
-					"sprite_id": 9,
-					"sprite_id_activated": 10,
-					"type": "boost",
-					"direction": 0,
-					"weight": 1
-				},
-				{
-					"id": 6,
-					"active": false,
-					"coord": {"x": 3, "y": 10},
-					"sprite_id": 9,
-					"sprite_id_activated": 10,
-					"type": "boost",
-					"direction": 0,
-					"weight": 1
-				},
-				{
-					"id": 7,
 					"active": true,
 					"coord": {"x": 3, "y": 11},
 					"sprite_id": 9,
 					"sprite_id_activated": 13,
-					"type": "boost",
-					"direction": 3,
+					"direction": -1,
+					"direction_activated": 3,
 					"weight": 1
 				},
 				{
-					"id": 8,
+					"id": 5,
 					"active": true,
 					"coord": {"x": 4, "y": 11},
 					"sprite_id": 9,
 					"sprite_id_activated": 13,
-					"type": "boost",
-					"direction": 3,
+					"direction": -1,
+					"direction_activated": 3,
+					"weight": 1
+				}
+			]
+		},
+		"doors": {
+			"list_raw": [
+				{
+					"id": 1,
+					"opened": false,
+					"coord": {"x": 7, "y": 3},
+					"sprite_id": 6,
+					"sprite_id_opened": 7,
+					"weight": 1
+				},
+				{
+					"id": 2,
+					"opened": false,
+					"coord": {"x": 7, "y": 4},
+					"sprite_id": 6,
+					"sprite_id_opened": 7,
+					"weight": 2
+				},
+				{
+					"id": 3,
+					"opened": false,
+					"coord": {"x": 3, "y": 6},
+					"sprite_id": 6,
+					"sprite_id_opened": 7,
 					"weight": 1
 				}
 			]
@@ -154,7 +187,8 @@
 			"sprite_id": 14,
 			"coords": [
 				{"x": 5, "y": 3},
-				{"x": 10, "y": 10}
+				{"x": 10, "y": 10},
+				{"x": 2, "y": 8}
 			]
 		}
 	}

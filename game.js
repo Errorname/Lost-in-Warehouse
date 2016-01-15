@@ -15,31 +15,35 @@ BasicGame.Boot.prototype =
 
 		/* Some misc options */
 		game.time.advancedTiming = true;
-		game.iso.anchor.setTo(0.5, 0.2);
-		game.world.setBounds(0, 0, 3072, 2048);
-		game.renderer.renderSession.roundPixels = true
-
-		/* Preload Objects */
+		game.iso.anchor.setTo(0.5, 0.2); // to comment ?
+		game.world.setBounds(0, 0, 3072, 2018);
+		game.renderer.renderSession.roundPixels = true;
+	
+		/* Preload Map & Player */
 		Map.preload();
 		Player.preload();
-		
+
 	},
 	create: function() {
 
-		/* Add a group holder for iso layers*/
+		/* Add a group holder for iso layers */
 		game.iso_layers = [];
+		['background','floor','main'].forEach(function (layer) {
+			game.iso_layers[layer] = game.add.group(undefined,layer);
+		});
 
-		/* Create Objects */
+		/* Create Map & Player */
 		Map.create();
 		Player.create();
 
 	},
 	update: function() {
 
+		/* Update Map & Player */
 		Map.update();
 		Player.update();
 
-		/* Update the z index of the element of the scene */
+		/* Update the z index of the layers */
 		game.iso.simpleSort(game.iso_layers['floor']);
 		game.iso.simpleSort(game.iso_layers['main']);
 
