@@ -1,5 +1,17 @@
 var game = new Phaser.Game(1024, 600, Phaser.AUTO, 'test', null, true, false);
 
+
+game.level = 1;
+
+game.nextLevel = function() {
+	game.level++;
+
+	game.state.clearCurrentState();
+	game.state.add('Boot',BasicGame.Boot);
+	game.state.start('Boot');
+
+}
+
 var BasicGame = function (game) {};
 
 BasicGame.Boot = function(game) {

@@ -1,5 +1,5 @@
 
-var Player = function(x,y) {
+var Player = function(x,y,frame) {
 
 	/* Coord */
 	this.coord = {x: x, y: y};
@@ -14,6 +14,7 @@ var Player = function(x,y) {
 			game.iso_layers['main']
 		);
 	this.sprite.anchor.set(0.5,1.0);
+	this.sprite.frame = frame;
 
 	/* Other */
 	this.keys_down = [0,0,0,0,0]; // 4 direction + (maybe) 1 action key
@@ -31,7 +32,7 @@ Player.preload = function() {
 Player.create = function() {
 
 	/* Create the player object */
-	game.player = new Player(game.map.player_coord.x,game.map.player_coord.y);
+	game.player = new Player(game.map.player_coord.x,game.map.player_coord.y,game.map.player_coord.frame);
 
 	/* Make Phaser capture the keys */
 	game.input.keyboard.addKeyCapture([
@@ -51,10 +52,10 @@ Player.create = function() {
 		game.player.registerKeyUp(event.keyCode);
 	};
 
+
+	//game.camera.deadzone = new Phaser.Rectangle(412, 300, 200, 100);
 	/* Make the camera follow the player */
 	game.camera.follow(game.player.sprite);
-
-	game.camera.deadzone = new Phaser.Rectangle(412, 300, 200, 100);
 
 };
 
@@ -88,7 +89,7 @@ Player.prototype.isWinning = function() {
 
 	var tile = game.map.layers.floor.tiles[this.coord.x][this.coord.y];
 	if (tile != undefined && tile.sprite.id == game.map.winning_tile) {
-		game.state.clearCurrentState();
+		game.nextLevel();
 	}
 
 };
