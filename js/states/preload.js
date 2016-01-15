@@ -56,6 +56,8 @@ LostInWarehouse.Preload.prototype =
 		game.load.spritesheet('back','assets/hud/back.png',69,71,2);
 		game.load.image('item','assets/hud/item.png');
 		game.load.spritesheet('sound','assets/hud/sound.png',69,71,4);
+
+		/* Loading Music & Sounds */
 		game.load.audio('click','assets/music/click.ogg');
 		game.load.audio('clack','assets/music/clack.ogg');
 		game.load.audio('cluck','assets/music/cluck.wav');
@@ -65,6 +67,10 @@ LostInWarehouse.Preload.prototype =
 		game.load.audio('win','assets/music/win.mp3');
 		game.load.audio('tp','assets/music/tp.mp3');
 		game.load.audio('lose','assets/music/lose.wav');
+
+		/* Loading Items */
+		game.load.image('item-0','assets/items/rabbit.jpg');
+		game.load.image('item-1','assets/items/rabbit.jpg');
 
 	},
 	create: function() {
