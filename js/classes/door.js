@@ -1,7 +1,14 @@
 
 var Door = function (raw) {
 
-	this.opened = raw.opened;
+	this.inversed = raw.inversed == undefined ? false : raw.inversed;
+
+	//console.log(raw.inversed);
+	//console.log(raw.opened?"truex":"falsex");
+
+	this.opened = this.inversed ? !raw.opened : raw.opened;
+
+	//console.log(this.opened?"true":"false");
 
 	/* Coords */
 	this.coord = {x: raw.coord.x, y: raw.coord.y};
@@ -72,7 +79,13 @@ Door.create = function() {
 // PROTOTYPES
 
 
-Door.prototype.open = function() {
+Door.prototype.open = function(inv) {
+
+	inv = inv == undefined ? false : inv;
+	if (this.inversed && !inv && this.opened) {
+		this.close(true);
+		return;
+	}
 
 	// So, the thing is: Some door may need to be open by 2 triggers
 	this.current_weight += 1;
@@ -92,7 +105,13 @@ Door.prototype.open = function() {
 
 };
 
-Door.prototype.close = function() {
+Door.prototype.close = function(inv) {
+
+	inv = inv == undefined ? false : inv;
+	if (this.inversed && !inv && !this.opened) {
+		this.open(true);
+		return;
+	}
 
 	this.current_weight -= 1;
 

@@ -24,11 +24,11 @@ LostInWarehouse.Menu.prototype =
 				var id = y*4+x+1;
 				if (y*4+x+1 <= available_levels) {
 					var button = null;
-					button = game.add.button(150+(x*200),100+(y*200), 'levels', function() {game.chooseLevel(this.id)},button, 1, 2, 1, 1);
+					button = game.add.button(150+(x*200)+(y*100),100+(y*200), 'levels', function() {game.chooseLevel(this.id)},button, 1, 2, 1, 1);
 					button.id = id;
-					game.add.sprite(180+(x*200),140+(y*200), 'numbers',10+(y*4+x+1));
-				} else {
-					game.add.button(150+(x*200),100+(y*200), 'levels', function() {console.log('clic');}, 0, 0, 0, 0);
+					game.add.sprite(180+(x*200)+(y*100),140+(y*200), 'numbers',10+(y*4+x+1));
+				} else if (y*4+x+1 <= game.nb_levels) {
+					game.add.button(150+(x*200)+(y*100),100+(y*200), 'levels', function() {console.log('clic');}, 0, 0, 0, 0);
 				}
 			}
 		}

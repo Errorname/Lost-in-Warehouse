@@ -46,7 +46,7 @@ LostInWarehouse.Win.prototype =
 		var item = game.add.sprite(240,200, 'item-'+id_item);
 		item.fixedToCamera = true;
 
-		var text = game.add.text(480,300, game.progress.itemText(id_item),{fontSize: '16px', fill: "#ffffff"});
+		var text = game.add.text(500,300, game.progress.itemText(id_item),{fontSize: '16px', fill: "#ffffff"});
 		text.fixedToCamera = true;
 	}
 }

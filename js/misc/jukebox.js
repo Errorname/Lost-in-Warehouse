@@ -8,7 +8,7 @@ game.jukebox = {
 		console.log('next!');
 		this.id_music = this.id_music == this.nb_music ? 1 : this.id_music + 1;
 		this.music = game.add.audio('music'+this.id_music);
-		this.music.play('',0,0.2);
+		//this.music.play('',0,0.2);
 
 		this.music.onStop.add(function() {
 			game.jukebox.next();

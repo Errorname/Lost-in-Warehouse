@@ -37,7 +37,7 @@ LostInWarehouse.Title.prototype =
 
 		// Set true config back
 		game.iso.anchor.setTo(0.5, 0.2);
-		game.world.setBounds(0, 0, 3072, 2018);
+		game.world.setBounds(0, 0, 10000, 7000);
 
 		game.id_level = 1;
 

@@ -69,8 +69,9 @@ LostInWarehouse.Preload.prototype =
 		game.load.audio('lose','assets/music/lose.wav');
 
 		/* Loading Items */
-		game.load.image('item-0','assets/items/rabbit.jpg');
-		game.load.image('item-1','assets/items/rabbit.jpg');
+		for (var i=0; i<8; i++) {
+			game.load.image('item-'+i,'assets/items/'+i+'.jpg');
+		}
 
 	},
 	create: function() {

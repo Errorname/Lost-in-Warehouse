@@ -2,7 +2,7 @@
 game.progress = {
 	available_levels: 1,
 	unlockLevel: function(level) {
-		if (level > this.available_levels) {
+		if (level > this.available_levels && level <= game.nb_levels) {
 			this.available_levels = level;
 			this.saveProgress();
 		}
@@ -31,8 +31,14 @@ game.progress = {
 	},
 
 	items: [
-		"A rabbit holding a waffle on his head.0",
-		"A rabbit holding a waffle on his head.1"
+		"A gorgeous Keyboard-Rose",
+		"An Illuminati Tears brick",
+		"A timeless Octopus Sandglass",
+		"The Secrets of the Universe",
+		"A Rainbow Cake Mushroom",
+		"A Unicorn-Tomatoe",
+		"Some NightSky in Bottle",
+		"A cubic-shaped Watermelon"
 	],
 	owned_items: [],
 	randomItem: function() {
