@@ -10,6 +10,7 @@ h1, h2 {
 
 #game {
 	width: 1024px;
+    height: 700px;
 	margin: 0 auto;
 	border: 1px dotted #a7aebe;
 }

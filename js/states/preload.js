@@ -11,8 +11,6 @@ LostInWarehouse.Preload.prototype =
 
 		/* Some misc options */
 		game.time.advancedTiming = true;
-		game.iso.anchor.setTo(0.5, 0.2);
-		game.world.setBounds(0, 0, 3072, 2018);
 		game.renderer.renderSession.roundPixels = true;
 
 		game.tweens.frameBased = true;
@@ -35,7 +33,7 @@ LostInWarehouse.Preload.prototype =
 	create: function() {
 
 		/* Loading levels */
-		for (var i = 1; i <= game.nb_levels; i++) {
+		for (var i = 0; i <= game.nb_levels; i++) {
 			game.load.json('level-'+i, 'assets/levels/'+i+'.json');
 		}
 
@@ -52,6 +50,18 @@ LostInWarehouse.Preload.prototype =
 
 		/* Loading HUD */
 		game.load.spritesheet('replay','assets/hud/replay.png',69,71,2);
+		game.load.spritesheet('start','assets/hud/start.png',247,60,2);
+		game.load.image('title','assets/hud/title.png');
+		game.load.image('menu','assets/hud/menu.png');
+		game.load.spritesheet('levels','assets/hud/levels.png',110,148,3);
+		game.load.spritesheet('numbers','assets/hud/numbers.png',48,60,20);
+		game.load.spritesheet('exit','assets/hud/exit.png',69,71,2);
+		game.load.image('awesome','assets/hud/awesome.png');
+		game.load.image('box','assets/hud/box.png');
+		game.load.spritesheet('next','assets/hud/next.png',69,71,2);
+		game.load.spritesheet('back','assets/hud/back.png',69,71,2);
+		game.load.image('item','assets/hud/item.png');
+
 
 		game.load.start();
 	}

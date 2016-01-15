@@ -321,7 +321,7 @@ Player.prototype.moveAnimation = function(duration) {
 	tween.onComplete.add(function() {
 
 		if (this.isOnExit() && this.carryPackage) {
-			game.goToNextLevel();
+			this.win();
 			return;
 		} else if (this.isOnLaser()) {
 			this.lose();
@@ -438,4 +438,8 @@ Player.prototype.lose = function() {
 		game.restart();
 	},this);
 
+};
+
+Player.prototype.win = function() {
+	game.endLevel();
 };

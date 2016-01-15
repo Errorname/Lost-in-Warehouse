@@ -22,8 +22,10 @@ LostInWarehouse.Level.prototype =
 		Player.create();
 
 		/* Add the HUD */
-		var replay = game.add.button(945,10, 'replay',game.restart,this,0,0,1,0);
-		replay.fixedToCamera = true;
+		this.replay = game.add.button(945,10, 'replay',game.restart,this,0,0,1,0);
+		this.replay.fixedToCamera = true;
+		this.exit = game.add.button(10,10, 'exit',game.backToMenu,this,0,0,1,0);
+		this.exit.fixedToCamera = true;
 
 		console.log('Loading level '+game.id_level+' done.');
 	},
@@ -44,6 +46,10 @@ LostInWarehouse.Level.prototype =
 			game.debug.text(game.player.coord.x+":"+game.player.coord.y,2,28,"#a7aebe");
 		}
 		
+	},
+	disableUI: function() {
+		this.replay.kill();
+		this.exit.kill();
 	}
 }
 
