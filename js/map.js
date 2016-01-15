@@ -31,6 +31,21 @@ Map.create = function() {
 
 Map.update = function() {
 
+	// If a woodbox was blocked during a slide on a boost,
+	// we need to make him try again to see if he can slide now
+
+	game.map.layers.boosts.list.forEach(function(boost) {
+
+		if ((boost.active && boost.direction_activated >= 0) || (!boost.active && boost.direction >= 0)) {
+			var woodbox = WoodBox.getWoodBox(boost.coord.x,boost.coord.y);
+			if (woodbox != undefined && woodbox.blockedOnBoost) {
+				woodbox.blockedOnBoost = false;
+				woodbox.slide();
+			}
+		}
+
+	});
+
 };
 
 Map.render = function() {

@@ -71,6 +71,13 @@ Boost.prototype.activate = function() {
 		this.active = true;
 		this.sprite.loadTexture('tile-'+this.sprite.id_activated);
 
+		// If there is a woodbox on it, make it slide
+		var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y);
+
+		if (woodbox != undefined &&!woodbox.isSliding) {
+			woodbox.slide();
+		}
+
 	}
 
 };

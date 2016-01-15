@@ -148,10 +148,13 @@ Player.prototype.lastDirectionDown = function() {
 
 Player.prototype.move = function() {
 
-	// If player is on boost
-	if (this.isOnBoost()) {
+
+	// Is the player on boost and can slide
+	if (this.isOnBoost() && this.canSlide()) {
+		
 		this.slide();
-		return;
+		return
+
 	}
 
 	var lastDirection = this.lastDirectionDown();
@@ -194,12 +197,28 @@ Player.prototype.slide = function() {
 	this.untrigger();
 
 	var boost = Boost.getBoost(this.coord.x,this.coord.y);
+	var direction = boost.active ? boost.direction_activated : boost.direction;
+	
+	if (this.canMove(direction)) {
+		var coord = Player.directionToCoord(direction);
+		this.coord.x += coord.x;
+		this.coord.y += coord.y;
 
-	var coord = Player.directionToCoord(boost.active ? boost.direction_activated : boost.direction);
-	this.coord.x += coord.x;
-	this.coord.y += coord.y;
+		// If there is a woodbox, move it
+		var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y);
+		if (woodbox != undefined) {
+			
+			woodbox.move(direction);
+			this.moveAnimation(400);
 
-	this.moveAnimation(100);
+		} else {
+
+			this.moveAnimation(100);
+
+		}
+	} else {
+		this.isMoving = false;
+	}
 
 };
 
@@ -217,9 +236,26 @@ Player.prototype.isOnBoost = function() {
 
 };
 
-Player.prototype.canMove = function() {
+Player.prototype.canSlide = function() {
+	var boost = Boost.getBoost(this.coord.x,this.coord.y);
 
-	var key = this.lastDirectionDown();
+	if (boost == undefined) {
+		return false;
+	}
+
+	var direction = boost.active ? boost.direction_activated : boost.direction;
+
+	if (direction == -1) {
+		return false;
+	}
+
+	return this.canMove(direction);
+}
+
+Player.prototype.canMove = function(key) {
+
+	if (key == undefined)
+		key = this.lastDirectionDown();
 
 	// If no direction down
 	if (key == -1)

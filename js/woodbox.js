@@ -16,6 +16,9 @@ var WoodBox = function(x,y,sprite_id) {
 	this.sprite.anchor.set(0.5,1);
 	this.sprite.id = sprite_id;
 
+	this.isSliding = false;
+	this.blockedOnBoost = false;
+
 };
 
 WoodBox.getWoodBox = function (x,y) {
@@ -39,6 +42,7 @@ WoodBox.getWoodBox = function (x,y) {
 WoodBox.prototype.move = function(direction) {
 
 	this.untrigger();
+	this.blockedOnBoost = false;
 
 	// Make the coord change
 	var coord = Player.directionToCoord(direction);
@@ -62,20 +66,36 @@ WoodBox.prototype.slide = function() {
 	this.untrigger();
 	
 	var boost = Boost.getBoost(this.coord.x,this.coord.y);
+	var direction = boost.active ? boost.direction_activated : boost.direction;
+	
+	if (this.canMove(direction)) {
 
-	var coord = Player.directionToCoord(boost.active ? boost.direction_activated : boost.direction);
-	this.coord.x += coord.x;
-	this.coord.y += coord.y;
+		var coord = Player.directionToCoord(direction);
+		this.coord.x += coord.x;
+		this.coord.y += coord.y;
 
-	this.moveAnimation(100, function() {
-
-		this.trigger();
-
-		if (this.isOnBoost()) {
-			this.slide();
+		if (game.player.coord.x == this.coord.x && game.player.coord.y == this.coord.y) {
+			this.blockedOnBoost = true;
+			this.coord.x -= coord.x;
+			this.coord.y -= coord.y;
+			return;
 		}
 
-	});
+		this.isSliding = true;
+
+		this.moveAnimation(100, function() {
+
+			this.trigger();
+			this.isSliding = false;
+
+			if (this.isOnBoost()) {
+				this.slide();
+			}
+
+		});
+	} else {
+		this.blockedOnBoost = true;
+	}
 
 };
 
