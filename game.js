@@ -10,7 +10,7 @@ BasicGame.Boot.prototype =
 {
 	preload: function () {
 		game.load.image('tile', 'assets/tile.png');
-		game.load.image('robot', 'assets/robot.png');
+		game.load.spritesheet('robot','assets/robot.png',120,105,4);
 
 		game.time.advancedTiming = true;
 
@@ -29,7 +29,6 @@ BasicGame.Boot.prototype =
 	update: function () {
 
 		//
-
 	},
 	render: function() {
 		game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
@@ -57,6 +56,8 @@ BasicGame.Boot.prototype =
 		player.move = function() {
 			if (player.canMove()) {
 				player.isMoving = true;
+
+				player.frame = player.lastDirection();
 
 				var tween = game.add.tween(player)
 							.to({isoX: player.coord.x * 67, isoY: player.coord.y * 67}, 
