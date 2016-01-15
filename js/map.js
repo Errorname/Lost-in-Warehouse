@@ -7,7 +7,7 @@ Map.preload = function() {
 	game.load.json('map', 'assets/maps/1.json');
 
 	/* Load tiles sprites */
-	for (var i = 1; i <= 14; i++) {
+	for (var i = 1; i <= 23; i++) {
 		game.load.image('tile-'+i, 'assets/sprites/tile-'+i+'.png');
 	}
 

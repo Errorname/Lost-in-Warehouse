@@ -14,7 +14,32 @@ Map.createLayer = function(){
 
 Map.createLayer.background = function () {
 
-	// To do
+	var background = game.map.layers['background'];
+
+	background.tiles = [];
+
+	for (var x = 0; x < game.map.width; x++) {
+
+		background.tiles[x] = [];
+
+		for (var y = 0; y < game.map.height; y++) {
+
+			var sprite_id = background.tiles_raw[y][x]; // Y,X => not an error
+
+			if (sprite_id > 0) {
+				background.tiles[x][y] = game.add.isoSprite(
+					x*Tile.width,
+					y*Tile.height,
+					0,
+					'tile-'+sprite_id,
+					0,
+					game.iso_layers['background']
+				);
+				background.tiles[x][y].anchor.set(0.5,1);
+			}
+
+		}
+	}
 
 };
 
