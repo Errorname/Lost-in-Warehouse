@@ -1,0 +1,32 @@
+body {
+	background: #383f58;
+	color: #a7aebe;
+	font-family: 'Roboto Slab', Georgia, serif;
+}
+
+h1, h2 {
+	text-align: center;
+}
+
+#test {
+	width: 1024px;
+	margin: 0 auto;
+	border: 1px dotted #a7aebe;
+}
+
+a {
+    color: #86bfda;
+    text-decoration: none;
+    -moz-transition: color 0.15s;
+    -o-transition: color 0.15s;
+    -webkit-transition: color 0.15s;
+    transition: color 0.15s;
+}
+
+a:visited {
+    color: #6297b0;
+}
+
+a:hover {
+    color: #fff;
+}
