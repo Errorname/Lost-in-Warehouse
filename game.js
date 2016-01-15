@@ -6,11 +6,12 @@ var LostInWarehouse = function() {};
 game._debug = true;
 
 game.nb_levels = 3;
-game.nb_tiles = 24;
+game.nb_tiles = 26;
 
 game.exit_tile = 18;
+game.package_tile = 26;
 
-game.id_level = 2;
+game.id_level = 1;
 
 game.tile = {width: 67, height: 67};
 

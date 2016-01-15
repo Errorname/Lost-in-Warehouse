@@ -20,6 +20,7 @@ var Player = function(x,y,frame) {
 	this.keys_down = [0,0,0,0];
 	this.isMoving = false;
 	this.usedPortal = false;
+	this.carryPackage = false;
 	
 };
 
@@ -114,7 +115,7 @@ Player.prototype.lastDirectionDown = function() {
 		}
 	}
 	// If no direction down, return -1;
-	return -1
+	return -1;
 };
 
 ////////
@@ -163,6 +164,29 @@ Player.prototype.isOnExit = function() {
 	return floor_tile != undefined && floor_tile.sprite.id == game.exit_tile;
 
 };
+
+Player.prototype.isOnPackage = function() {
+
+	var floor_tile = game.map.layers['floor'].tiles[this.coord.x][this.coord.y];
+
+	return floor_tile != undefined && floor_tile.sprite.id == game.package_tile;
+
+};
+
+Player.prototype.takePackage = function() {
+
+	this.carryPackage = true;
+
+	var direction = this.lastDirectionDown();
+
+	game.time.events.add(100, function() {
+		this.sprite.frame = direction >= 0 ? direction + 4 : direction;
+		var tile = game.map.layers['floor'].tiles[this.coord.x][this.coord.y];
+		tile.sprite.loadTexture('tile-'+(game.package_tile-1));
+		tile.sprite.id = game.package_tile-1;
+	},this);
+	
+}
 
 //////////
 
@@ -225,6 +249,11 @@ Player.prototype.useBoost = function() {
 	this.coord.x += coord.x;
 	this.coord.y += coord.y;
 
+	// If there is a package, take it
+	if (this.isOnPackage()) {
+		this.takePackage();
+	}
+
 	// If there is a woodbox, move it
 	var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y);
 	if (woodbox != undefined) {
@@ -254,6 +283,11 @@ Player.prototype.walk = function(direction) {
 
 	this.isMoving = true;
 
+	// If there is a package, take it
+	if (this.isOnPackage()) {
+		this.takePackage();
+	}
+
 	// If there is a woodbox, move it
 	var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y);
 	if (woodbox != undefined) {
@@ -274,7 +308,7 @@ Player.prototype.moveAnimation = function(duration) {
 
 	tween.onComplete.add(function() {
 
-		if (this.isOnExit()) {
+		if (this.isOnExit() && this.carryPackage) {
 			game.goToNextLevel();
 			return;
 		}
@@ -344,7 +378,8 @@ Player.prototype.canMove = function(direction) {
 Player.prototype.refreshFrame = function() {
 
 	// Change the sprite orientation
-	this.sprite.frame = this.lastDirectionDown();
+	var lastDirection = this.lastDirectionDown();
+	this.sprite.frame = lastDirection >= 0 ? lastDirection+(this.carryPackage ? 4 : 0) : lastDirection;
 
 };
 
