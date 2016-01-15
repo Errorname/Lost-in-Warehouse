@@ -23,6 +23,9 @@ LostInWarehouse.Win.prototype =
 
 	},
 	showItem: function() {
+
+		game.jukebox.sound('cluck',0.5);
+
 		var item = game.add.sprite(0,0, 'item');
 		item.fixedToCamera = true;
 		var back = game.add.button(540,400, 'back',game.backToMenu,this,0,0,1,0);
@@ -33,11 +36,3 @@ LostInWarehouse.Win.prototype =
 }
 
 game.state.add('Win',LostInWarehouse.Win);
-
-/* Items
-
-Rabbit https://en.wikipedia.org/wiki/Oolong_(rabbit)#/media/File:Oolong_the_Rabbit%27s_last_performance_(2003).jpg
-
-
-
-*/

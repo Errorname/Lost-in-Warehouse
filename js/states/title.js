@@ -28,6 +28,8 @@ LostInWarehouse.Title.prototype =
 		var title = game.add.sprite(212,10, 'title');
 		var start = game.add.button(670,350, 'start',this.makeRobotWalk,this,0,0,1,0);
 
+		game.jukebox.putSoundButton({x:945,y:10});
+
 		console.log('Loading Title Screen done.');
 
 	},
@@ -42,6 +44,9 @@ LostInWarehouse.Title.prototype =
 		game.state.start('Menu');
 	},
 	makeRobotWalk: function() {
+	
+		game.jukebox.sound('cluck');
+
 		game.player.sprite.frame = 2;
 		var tween = game.add.tween(game.player.sprite).to({isoY: 4*game.tile.height}, 1400, Phaser.Easing.Linear.None, true, 0, 0, false);
 	

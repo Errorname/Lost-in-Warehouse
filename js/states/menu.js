@@ -12,6 +12,7 @@ LostInWarehouse.Menu.prototype =
 		/* Add the HUD */
 		var menu = game.add.sprite(0,0, 'menu');
 		var exit = game.add.button(20,25, 'exit',game.backToTitle,this,0,0,1,0);
+		game.jukebox.putSoundButton({x:935,y:25});
 
 		var available_levels = game.nb_levels;
 

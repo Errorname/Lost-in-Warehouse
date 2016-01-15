@@ -189,6 +189,8 @@ Player.prototype.takePackage = function() {
 
 	this.carryPackage = true;
 
+	game.jukebox.sound('box');
+
 	var direction = this.lastDirectionDown();
 
 	game.time.events.add(100, function() {
@@ -221,6 +223,8 @@ Player.prototype.canUsePortal = function() {
 
 Player.prototype.usePortal = function() {
 	var portal_dest = Portal.getPortalById(Portal.getPortal(this.coord.x,this.coord.y).portal_to);
+
+	game.jukebox.sound('tp');
 
 	this.coord.x = portal_dest.coord.x;
 	this.coord.y = portal_dest.coord.y;
@@ -303,6 +307,8 @@ Player.prototype.walk = function(direction) {
 	// If there is a woodbox, move it
 	var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y);
 	if (woodbox != undefined) {
+
+		game.jukebox.sound('push');
 		
 		woodbox.move(direction,400);
 		this.moveAnimation(400);
@@ -433,7 +439,9 @@ Player.prototype.untrigger = function() {
 
 Player.prototype.lose = function() {
 
-	game.time.events.add(1000, function() {
+	game.jukebox.sound('lose');
+
+	game.time.events.add(1500, function() {
 		Enemy.drawLasers();
 		game.restart();
 	},this);
@@ -441,5 +449,6 @@ Player.prototype.lose = function() {
 };
 
 Player.prototype.win = function() {
+	game.jukebox.sound('win');
 	game.endLevel();
 };

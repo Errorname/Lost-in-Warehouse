@@ -19,6 +19,7 @@ game.goToNextLevel = function() {
 	game.id_level++;
 	
 	game.state.start('Level');
+	game.jukebox.sound('cluck');
 }
 
 game.restart = function() {
@@ -29,14 +30,17 @@ game.chooseLevel = function(id_level) {
 	game.id_level = id_level;
 
 	game.state.start('Level');
+	game.jukebox.sound('cluck');
 }
 
 game.backToTitle = function() {
 	game.state.start('Title');
+	game.jukebox.sound('cluck');
 }
 
 game.backToMenu = function() {
 	game.state.start('Menu');
+	game.jukebox.sound('cluck');
 }
 
 game.endLevel = function() {

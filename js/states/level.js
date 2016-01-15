@@ -22,10 +22,11 @@ LostInWarehouse.Level.prototype =
 		Player.create();
 
 		/* Add the HUD */
-		this.replay = game.add.button(945,10, 'replay',game.restart,this,0,0,1,0);
+		this.replay = game.add.button(865,10, 'replay',function() {game.jukebox.sound('cluck');game.restart;},this,0,0,1,0);
 		this.replay.fixedToCamera = true;
 		this.exit = game.add.button(10,10, 'exit',game.backToMenu,this,0,0,1,0);
 		this.exit.fixedToCamera = true;
+		game.jukebox.putSoundButton({x:945,y:10});
 
 		console.log('Loading level '+game.id_level+' done.');
 	},

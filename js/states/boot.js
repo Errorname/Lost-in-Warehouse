@@ -5,6 +5,8 @@ LostInWarehouse.Boot = function(game) {};
 LostInWarehouse.Boot.prototype =
 {
 	preload: function() {
+
+		game.stage.disableVisibilityChange = true;
 		
 	},
 	create: function() {

@@ -71,6 +71,8 @@ Trigger.prototype.trigger = function() {
 	this.triggered = true;
 	this.sprite.loadTexture('tile-'+Trigger.data.sprite_id_triggered);
 
+	game.jukebox.sound('click');
+
 	this.targets.forEach(function(target) {
 
 		if (target.type == "door") {
@@ -117,6 +119,8 @@ Trigger.prototype.untrigger = function() {
 
 		this.triggered = false;
 		this.sprite.loadTexture('tile-'+(this.permanent ? Trigger.data.sprite_id_permanent : Trigger.data.sprite_id));
+
+		game.jukebox.sound('clack');
 
 		this.targets.forEach(function(target) {
 

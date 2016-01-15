@@ -6,6 +6,8 @@ LostInWarehouse.Preload.prototype =
 {
 	preload: function() {
 
+		text = game.add.text(400, 330, 'Loading: 0%', { fill: '#000000' });
+
 		/* Enable the Isometric plugin */
 		game.plugins.add(new Phaser.Plugin.Isometric(game));
 
@@ -21,16 +23,17 @@ LostInWarehouse.Preload.prototype =
 
 		game.load.onFileComplete.add(function(progress, cacheKey, success, totalLoaded, totalFiles) {
 			console.log("File Complete: " + progress + "% - " + totalLoaded + " out of " + totalFiles);
+			text.setText('Loading: '+progress+'%');
 		},this);
 
 		game.load.onLoadComplete.add(function() {
+
+			game.load.onLoadStart.removeAll();
+			game.load.onFileComplete.removeAll();
+			game.load.onLoadComplete.removeAll();
 			console.log('Loading assets done.');
 
-			game.state.start('Title')
 		},this);
-
-	},
-	create: function() {
 
 		/* Loading levels */
 		for (var i = 0; i <= game.nb_levels; i++) {
@@ -61,9 +64,35 @@ LostInWarehouse.Preload.prototype =
 		game.load.spritesheet('next','assets/hud/next.png',69,71,2);
 		game.load.spritesheet('back','assets/hud/back.png',69,71,2);
 		game.load.image('item','assets/hud/item.png');
+		game.load.spritesheet('sound','assets/hud/sound.png',69,71,4);
+		game.load.audio('click','assets/music/click.ogg');
+		game.load.audio('clack','assets/music/clack.ogg');
+		game.load.audio('cluck','assets/music/cluck.wav');
+		game.load.audio('open','assets/music/open.ogg');
+		game.load.audio('push','assets/music/push.wav');
+		game.load.audio('box','assets/music/box.ogg');
+		game.load.audio('win','assets/music/win.mp3');
+		game.load.audio('tp','assets/music/tp.mp3');
+		game.load.audio('lose','assets/music/lose.wav');
 
+	},
+	create: function() {
+
+		game.load.audio("music1","assets/music/Thinking.mp3");
+		game.load.audio("music2","assets/music/Anticipation.mp3");
+		//game.load.audio("music3","assets/music/Thinking - Alternative.mp3");
+		//game.load.audio("music4","assets/music/Anticipation - Alternative.mp3");
+
+		game.load.onLoadComplete.add(function() {
+
+			console.log('starting music');
+
+			game.jukebox.next();
+		},this);
 
 		game.load.start();
+
+		game.state.start('Title');
 	}
 }
 
