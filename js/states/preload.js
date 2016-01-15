@@ -45,6 +45,9 @@ LostInWarehouse.Preload.prototype =
 		/* Loading robot spritesheet */
 		game.load.spritesheet('robot','assets/sprites/robot.png',120,105,4);
 
+		/* Loading HUD */
+		game.load.spritesheet('replay','assets/hud/replay.png',69,71,2);
+
 		game.load.start();
 	}
 }

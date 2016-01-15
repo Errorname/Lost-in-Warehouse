@@ -21,6 +21,10 @@ LostInWarehouse.Level.prototype =
 		Map.create();
 		Player.create();
 
+		/* Add the HUD */
+		var replay = game.add.button(945,10, 'replay',game.restart,this,0,0,1,0);
+		replay.fixedToCamera = true;
+
 		console.log('Loading level '+game.id_level+' done.');
 	},
 	update: function() {

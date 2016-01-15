@@ -19,3 +19,7 @@ game.goToNextLevel = function() {
 	
 	game.state.restart();
 }
+
+game.restart = function() {
+	game.state.restart();
+}
