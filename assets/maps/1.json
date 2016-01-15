@@ -35,6 +35,24 @@
 					"id": 2
 				}
 			]
+		},
+		"trigger": {
+			"method": "list",
+			"tiles_raw": [
+				{
+					"coord": {"x": 5, "y": 1},
+					"id": 3,
+					"id_triggered": 5,
+					"type": "multiple",
+					"time_to_untrigger": 300
+				},
+				{
+					"coord": {"x": 1, "y": 1},
+					"id": 3,
+					"id_triggered": 5,
+					"type": "once"
+				}
+			]
 		}
 	}
 }

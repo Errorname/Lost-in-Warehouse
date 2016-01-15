@@ -81,6 +81,8 @@ Player.prototype.move = function() {
 
 		this.isMoving = true;
 
+		this.untrigger();
+
 		// Make the coord change
 		var coord = Player.directionToCoord(lastDirection);
 		this.coord.x += coord.x;
@@ -90,6 +92,9 @@ Player.prototype.move = function() {
 		var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * game.map_info.tile.width, isoY: this.coord.y * game.map_info.tile.height}, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
 		
 		tween.onComplete.add(function() {
+
+				this.trigger();
+
 				this.move();
 			},this);
 
@@ -188,4 +193,27 @@ Player.prototype.registerKeyUp = function(keyCode) {
 		this.keys_down[4] = 0;
 	}
 
+};
+
+Player.prototype.trigger = function() {
+	var trigger_tile = game.map.layers.trigger.tiles[this.coord.x];
+
+	if (trigger_tile != undefined && trigger_tile[this.coord.y] != undefined) {
+		trigger_tile = trigger_tile[this.coord.y];
+
+		if (!trigger_tile.triggered) {
+			if (trigger_tile.type == "multiple") {
+				this.tile_triggered = trigger_tile;
+			}
+			
+			trigger_tile.trigger();
+		}
+	}
+};
+
+Player.prototype.untrigger = function() {
+	if (this.tile_triggered != undefined) {
+		this.tile_triggered.untrigger();
+		this.tile_triggered = undefined;
+	}
 };

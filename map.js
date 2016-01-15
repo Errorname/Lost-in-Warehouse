@@ -14,7 +14,7 @@ Map.preload = function() {
 	game.load.json('map-info','assets/maps/info.json');
 
 	/* Load tiles sprites */
-	for (var i = 1; i <= 2; i++) {
+	for (var i = 1; i <= 5; i++) {
 		game.load.image('tile-'+i, 'assets/sprites/tile-'+i+'.png');
 	}
 
@@ -103,7 +103,16 @@ Map.createTiles = function() {
 
 				tile.anchor.set(0.5,1);
 
+				tile.id = tile_raw.id;
 				tile.coord = tile_raw.coord;
+
+				if (layer_raw.name == "trigger") {
+					tile.id_triggered = tile_raw.id_triggered;
+					tile.type = tile_raw.type;
+					tile.time_to_untrigger = tile_raw.time_to_untrigger;
+					Map.enableTrigger(tile);
+				}
+
 				layer.tiles[tile_raw.coord.x][tile_raw.coord.y] = tile;
 			});
 
@@ -119,3 +128,27 @@ Map.update = function() {
 Map.render = function() {
 
 };
+
+Map.enableTrigger = function(tile) {
+	tile.triggered = false;
+
+	tile.trigger = function() {
+		console.log(tile.coord.x+":"+tile.coord.y+" triggered");
+
+		tile.triggered = true;
+		tile.loadTexture('tile-'+tile.id_triggered);
+	}
+	tile.untrigger = function() {
+		var timer = game.time.create(false);
+
+		timer.add(tile.time_to_untrigger,function() {
+			console.log(tile.coord.x+":"+tile.coord.y+" untriggered")
+
+			tile.triggered = false;
+			tile.loadTexture('tile-'+tile.id);
+		});
+
+		timer.start();
+		
+	}
+}
