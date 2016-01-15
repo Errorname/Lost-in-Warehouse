@@ -12,12 +12,9 @@ Player.preload = function() {
 
 Player.create = function() {
 
-	/* Create group */
-	game.groups['character'] = game.add.group(undefined,'character');
-
 	/* Create the player object */
-	game.player = new Player(game.add.isoSprite(134,134, 0, 'robot', 0, game.groups['isoGroup']));
-	game.player.sprite.anchor.set(0.5, 1);
+	game.player = new Player(game.add.isoSprite(134,134, 0, 'robot', 0, game.groups['main-layer']));
+	game.player.sprite.anchor.set(0.5, 1.0);
 	game.player.coord = {x: 2, y: 2};
 	game.player.keys_down = [0,0,0,0,0];
 
@@ -48,6 +45,7 @@ Player.create = function() {
 
 	/* Make the camera follow the player */
 	game.camera.follow(game.player.sprite);
+
 };
 
 Player.update = function() {
@@ -89,7 +87,7 @@ Player.prototype.move = function() {
 		this.coord.y += coord.y;
 
 		// Add a sliding effect
-		var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * game.map.tile.width, isoY: this.coord.y * game.map.tile.height}, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
+		var tween = game.add.tween(this.sprite).to({isoX: this.coord.x * game.map_info.tile.width, isoY: this.coord.y * game.map_info.tile.height}, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
 		
 		tween.onComplete.add(function() {
 				this.move();

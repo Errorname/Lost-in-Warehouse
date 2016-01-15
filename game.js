@@ -29,15 +29,9 @@ BasicGame.Boot.prototype =
 		/* Add a group holder */
 		game.groups = [];
 
-		/* Create the isoGroup for isoDepths */
-		game.groups['isoGroup'] = game.add.group(undefined,'isoGroup');
-
 		/* Create Objects */
 		Map.create();
 		Player.create();
-
-		/* Make sure that isoGroup is on top of the floor */
-		game.world.bringToTop(game.groups['isoGroup']);
 
 	},
 	update: function() {
@@ -46,7 +40,7 @@ BasicGame.Boot.prototype =
 		Player.update();
 
 		/* Update the z index of the element of the scene */
-		game.iso.simpleSort(game.groups['isoGroup']);
+		game.iso.simpleSort(game.groups['main-layer']);
 
 	},
 	render: function() {
