@@ -5,7 +5,7 @@ var LostInWarehouse = function() {};
 /* Some misc data */
 game._debug = true;
 
-game.nb_levels = 2;
+game.nb_levels = 3;
 game.nb_tiles = 24;
 
 game.exit_tile = 18;
