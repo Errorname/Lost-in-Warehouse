@@ -51,6 +51,10 @@ Player.create = function() {
 		game.player.registerKeyUp(event.keyCode);
 	};
 
+	game.onResume.add(function() {
+		game.player.refreshKeyUp();
+	},this);
+
 };
 
 Player.directionToCoord = function (direction) {
@@ -84,6 +88,15 @@ Player.prototype.registerKeyUp = function(keyCode) {
 	// if direction key
 	if (keyCode >= 37 && keyCode <= 40) {
 		this.keys_down[keyCode-37] = 0;
+	}
+};
+
+Player.prototype.refreshKeyUp = function() {
+
+	for (var i=37; i<=40; i++) {
+		if(game.input.keyboard._keys[i] && game.input.keyboard._keys[i].isUp) {
+			this.registerKeyUp(i)
+		}
 	}
 };
 
@@ -229,18 +242,23 @@ Player.prototype.useBoost = function() {
 
 //////////
 
-Player.prototype.walk = function() {
+Player.prototype.walk = function(direction) {
+
+	if (direction == null)
+		direction = this.lastDirectionDown()
 
 	// Make the coord change
-	var coord = Player.directionToCoord(this.lastDirectionDown());
+	var coord = Player.directionToCoord(direction);
 	this.coord.x += coord.x;
 	this.coord.y += coord.y;
+
+	this.isMoving = true;
 
 	// If there is a woodbox, move it
 	var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y);
 	if (woodbox != undefined) {
 		
-		woodbox.move(this.lastDirectionDown(),400);
+		woodbox.move(direction,400);
 		this.moveAnimation(400);
 
 	} else {

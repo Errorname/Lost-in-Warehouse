@@ -10,7 +10,7 @@ game.nb_tiles = 24;
 
 game.exit_tile = 18;
 
-game.id_level = 1;
+game.id_level = 2;
 
 game.tile = {width: 67, height: 67};
 

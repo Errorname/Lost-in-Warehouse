@@ -82,6 +82,8 @@ Door.prototype.open = function() {
 		this.opened = true;
 		this.sprite.loadTexture('tile-'+Door.data.sprite_id_opened);
 
+		this.liftBox(false);
+
 		// An open door goes to the floor
 		game.iso_layers['main'].remove(this.sprite);
 		game.iso_layers['floor'].add(this.sprite);
@@ -99,10 +101,19 @@ Door.prototype.close = function() {
 		this.opened = false;
 		this.sprite.loadTexture('tile-'+Door.data.sprite_id);
 
+		this.liftBox(true);
+
 		// A closed door goes to the main layer
 		game.iso_layers['floor'].remove(this.sprite);
 		game.iso_layers['main'].add(this.sprite);
 
 	}
 
+};
+
+Door.prototype.liftBox = function(lift) {
+	var woodbox = WoodBox.getWoodBox(this.coord.x,this.coord.y)
+	if(woodbox) {
+		woodbox.sprite.isoZ = lift ? 30 : 0;
+	}
 };

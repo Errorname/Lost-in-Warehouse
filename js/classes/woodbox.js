@@ -64,7 +64,14 @@ WoodBox.tick = function() {
 			var woodbox = WoodBox.getWoodBox(boost.coord.x,boost.coord.y);
 			if (woodbox != undefined && !woodbox.isMoving) {
 				if (woodbox.canMove(direction)) {
-					woodbox.move(direction,100);
+					if (woodbox.isNextToPlayer(direction)) {
+						if (game.player.canMove(direction)) {
+							woodbox.move(direction,200);
+							game.player.walk(direction);
+						}
+					} else {
+						woodbox.move(direction,100);
+					}
 				}
 			}
 		}
@@ -165,4 +172,12 @@ WoodBox.prototype.untrigger = function() {
 		trigger.untrigger();
 	}
 
+};
+
+WoodBox.prototype.isNextToPlayer = function(direction) {
+	var coord = Player.directionToCoord(direction);
+	coord.x += this.coord.x;
+	coord.y += this.coord.y;
+
+	return (game.player.coord.x == coord.x && game.player.coord.y == coord.y);
 };

@@ -15,6 +15,9 @@ LostInWarehouse.Preload.prototype =
 		game.world.setBounds(0, 0, 3072, 2018);
 		game.renderer.renderSession.roundPixels = true;
 
+		
+		game.tweens.frameBased = true;
+
 		game.load.onLoadStart.add(function() {
 			console.log('Loading assets');
 		},this);
