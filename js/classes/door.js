@@ -20,7 +20,7 @@ var Door = function (raw) {
 			0,
 			'tile-'+(this.opened ? Door.data.sprite_id_opened : Door.data.sprite_id),
 			0,
-			game.iso_layers[(this.openend ? 'floor' : 'main')]
+			game.iso_layers[(this.opened ? 'floor' : 'main')]
 		);
 	this.sprite.anchor.set(0.5,1);
 
