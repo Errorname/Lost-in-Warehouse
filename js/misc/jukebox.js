@@ -8,7 +8,9 @@ game.jukebox = {
 		console.log('next!');
 		this.id_music = this.id_music == this.nb_music ? 1 : this.id_music + 1;
 		this.music = game.add.audio('music'+this.id_music);
-		//this.music.play('',0,0.2);
+		if (this.playing) {
+			this.music.play('',0,0.2);
+		}
 
 		this.music.onStop.add(function() {
 			game.jukebox.next();
@@ -17,12 +19,14 @@ game.jukebox = {
 	off: function() {
 		this.playing = false;
 
-		if (this.music.isPlaying) {
-			this.music.pause();
-		} else {
-			this.music.onPlay.add(function() {
+		if (this.music != null) {
+			if (this.music.isPlaying) {
 				this.music.pause();
-			},this)
+			} else {
+				this.music.onPlay.add(function() {
+					this.music.pause();
+				},this)
+			}
 		}
 	},
 	on: function() {
